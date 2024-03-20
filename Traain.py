@@ -51,7 +51,6 @@ class EmotionDetectorApp(QWidget):
         self.statistics_label = QLabel(self)
         self.emotion_counts = {label: 0 for label in self.labels.values()}  # Initialize counts for each emotion
 
-        # Matplotlib setup
         self.figure, self.ax = plt.subplots()
         self.canvas = FigureCanvas(self.figure)
         self.ax.bar(self.labels.values(), self.emotion_counts.values())
