@@ -6,6 +6,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import copy
 import math
+import sys
 
 population_size = 50
 generations = 100
@@ -18,6 +19,7 @@ class GeneticAlgorithmApp(QMainWindow):
 
         self.setWindowTitle("Genetic Algorithm App")
         self.setGeometry(100, 100, 800, 600)
+        self.showMaximized()
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -209,13 +211,8 @@ def mutate(individual):
     individual[mutation_point1], individual[mutation_point2] = individual[mutation_point2], individual[mutation_point1]
     return individual
 
-
-def main():
+if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = GeneticAlgorithmApp()
     window.show()
     sys.exit(app.exec_())
-
-if __name__ == "__main__":
-    import sys
-    main()
