@@ -1,7 +1,7 @@
 import cv2
 from keras.models import model_from_json
 import numpy as np
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QMessageBox, QTextEdit, QGridLayout
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtGui import QImage, QPixmap
 import matplotlib.pyplot as plt
@@ -84,7 +84,6 @@ class PositiveEmotionWindow(QWidget):
         self.canvas.draw()
 
 
-
 class EmotionDetectorApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -105,6 +104,8 @@ class EmotionDetectorApp(QWidget):
         self.model_json = None
         self.json_file = None
         self.positive_window = None
+        self.training_info = None
+        self.text_edit = None  # Додаємо text_edit як атрибут класу
         self.initUI()
 
     def initUI(self):
@@ -135,11 +136,28 @@ class EmotionDetectorApp(QWidget):
         self.ax.set_ylabel('Count')
         self.ax.set_title('Emotion Statistics')
 
+        try:
+            with open("ML.txt", "r") as file:
+                training_info = file.read()
+            self.training_info = training_info
+        except FileNotFoundError:
+            self.training_info = "File not found."
         layout = QVBoxLayout()
-        layout.addWidget(self.btn_stat)
-        layout.addWidget(self.btn_positive)
-        layout.addWidget(self.statistics_label)
-        layout.addWidget(self.canvas)
+        grid_layout = QGridLayout()
+
+        grid_layout.addWidget(self.btn_stat, 0, 0)
+        grid_layout.addWidget(self.btn_positive, 0, 1)
+        grid_layout.addWidget(self.statistics_label, 1, 0, 1, 2)
+        grid_layout.addWidget(self.canvas, 4, 0, 1, 2)
+
+        self.text_edit = QTextEdit()
+        self.text_edit.setText(self.training_info)
+
+        grid_layout.addWidget(self.text_edit, 0, 12, 0, 10)
+
+
+        layout.addLayout(grid_layout)
+        layout.setAlignment(Qt.AlignTop)
 
         self.setLayout(layout)
 
@@ -208,7 +226,6 @@ class EmotionDetectorApp(QWidget):
             message = "Unable to determine your emotion."
 
         QMessageBox.information(self, "Dominant Emotion", message)
-
 
 if __name__ == '__main__':
     app = QApplication([])
