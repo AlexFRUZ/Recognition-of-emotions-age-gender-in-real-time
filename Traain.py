@@ -1,7 +1,7 @@
 import cv2
 from keras.models import model_from_json
 import numpy as np
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QSplitter, QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QMessageBox
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtGui import QImage, QPixmap
 import matplotlib.pyplot as plt
@@ -15,18 +15,31 @@ def extract_features(image):
 
 
 class PositiveEmotionWindow(QWidget):
-    def __init__(self):
+    def __init__(self, emotion_counts):
         super().__init__()
         self.setWindowTitle('Emotion Levels')
         self.resize(600, 500)
 
-        self.figure, self.ax = plt.subplots()
-        self.emotion_line, = self.ax.plot([], [], 'b-', label='Emotion Levels')
-        self.ax.set_xticks(range(7))
-        self.ax.set_xticklabels(['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise'])
-        self.ax.set_ylabel('Emotion Level')
-        self.ax.set_title('Emotion Levels over Time')
-        self.ax.legend()
+        self.figure, (self.ax_positive, self.ax_neutral, self.ax_negative) = plt.subplots(3, 1, figsize=(8, 6))
+        self.ax_positive.set_title('Positive Emotions')
+        self.ax_neutral.set_title('Neutral Emotions')
+        self.ax_negative.set_title('Negative Emotions')
+
+        self.emotion_line_positive, = self.ax_positive.plot([], [], 'b-', label='Emotion Levels')
+        self.emotion_line_neutral, = self.ax_neutral.plot([], [], 'g-', label='Emotion Levels')
+        self.emotion_line_negative, = self.ax_negative.plot([], [], 'r-', label='Emotion Levels')
+
+        self.ax_positive.set_xticks(range(7))
+        self.ax_neutral.set_xticks(range(7))
+        self.ax_negative.set_xticks(range(7))
+
+        self.ax_positive.set_ylabel('Emotion Level')
+        self.ax_neutral.set_ylabel('Emotion Level')
+        self.ax_negative.set_ylabel('Emotion Level')
+
+        self.ax_positive.legend()
+        self.ax_neutral.legend()
+        self.ax_negative.legend()
 
         self.canvas = FigureCanvas(self.figure)
 
@@ -34,33 +47,42 @@ class PositiveEmotionWindow(QWidget):
         layout.addWidget(self.canvas)
         self.setLayout(layout)
 
-        self.x_data = []
-        self.y_data = []
+        self.x_data = {'positive': [], 'neutral': [], 'negative': []}
+        self.y_data = {'positive': [], 'neutral': [], 'negative': []}
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_plot)
         self.timer.start(1000)
 
+        self.emotion_counts = emotion_counts
+
     def update_plot(self):
-        positive_emotion = 10
-        negative_emotion = 5
-        neutral_emotion = 3
+        positive_emotions = ['happy', 'surprise']
+        neutral_emotions = ['neutral']
+        negative_emotions = ['angry', 'disgust', 'fear', 'sad']
 
-        total_emotion = positive_emotion - negative_emotion
-        if total_emotion > 0:
-            position = 1
-        elif total_emotion < 0:
-            position = -1
-        else:
-            position = 0
+        total_positive_emotion = sum([self.emotion_counts[emotion] for emotion in positive_emotions])
+        total_neutral_emotion = sum([self.emotion_counts[emotion] for emotion in neutral_emotions])
+        total_negative_emotion = sum([self.emotion_counts[emotion] for emotion in negative_emotions])
 
-        self.x_data.append(len(self.x_data) + 1)
-        self.y_data.append(position)
+        self.x_data['positive'].append(len(self.x_data['positive']) + 1)
+        self.x_data['neutral'].append(len(self.x_data['neutral']) + 1)
+        self.x_data['negative'].append(len(self.x_data['negative']) + 1)
 
-        self.emotion_line.set_data(self.x_data, self.y_data)
-        self.ax.relim()
-        self.ax.autoscale_view(True, True, True)
+        self.y_data['positive'].append(total_positive_emotion)
+        self.y_data['neutral'].append(total_neutral_emotion)
+        self.y_data['negative'].append(total_negative_emotion)
+
+        self.emotion_line_positive.set_data(self.x_data['positive'], self.y_data['positive'])
+        self.emotion_line_neutral.set_data(self.x_data['neutral'], self.y_data['neutral'])
+        self.emotion_line_negative.set_data(self.x_data['negative'], self.y_data['negative'])
+
+        for ax in [self.ax_positive, self.ax_neutral, self.ax_negative]:
+            ax.relim()
+            ax.autoscale_view(True, True, True)
+
         self.canvas.draw()
+
 
 
 class EmotionDetectorApp(QWidget):
@@ -113,14 +135,11 @@ class EmotionDetectorApp(QWidget):
         self.ax.set_ylabel('Count')
         self.ax.set_title('Emotion Statistics')
 
-        self.splitter = QSplitter(Qt.Vertical)
-        self.splitter.addWidget(self.statistics_label)
-        self.splitter.addWidget(self.canvas)
-
         layout = QVBoxLayout()
         layout.addWidget(self.btn_stat)
         layout.addWidget(self.btn_positive)
-        layout.addWidget(self.splitter)
+        layout.addWidget(self.statistics_label)
+        layout.addWidget(self.canvas)
 
         self.setLayout(layout)
 
@@ -161,7 +180,7 @@ class EmotionDetectorApp(QWidget):
             pass
 
     def show_positive_emotions(self):
-        self.positive_window = PositiveEmotionWindow()
+        self.positive_window = PositiveEmotionWindow(self.emotion_counts)
         self.positive_window.show()
 
     def show_statistics(self):
