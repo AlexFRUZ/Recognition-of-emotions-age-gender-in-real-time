@@ -105,7 +105,6 @@ class EmotionDetectorApp(QWidget):
         self.json_file = None
         self.positive_window = None
         self.training_info = None
-        self.text_edit = None  # Додаємо text_edit як атрибут класу
         self.initUI()
 
     def initUI(self):
@@ -154,7 +153,6 @@ class EmotionDetectorApp(QWidget):
         self.text_edit.setText(self.training_info)
 
         grid_layout.addWidget(self.text_edit, 0, 12, 0, 10)
-
 
         layout.addLayout(grid_layout)
         layout.setAlignment(Qt.AlignTop)
