@@ -29,10 +29,6 @@ class PositiveEmotionWindow(QWidget):
         self.emotion_line_neutral, = self.ax_neutral.plot([], [], 'g-', label='Emotion Levels')
         self.emotion_line_negative, = self.ax_negative.plot([], [], 'r-', label='Emotion Levels')
 
-        self.ax_positive.set_xticks(range(7))
-        self.ax_neutral.set_xticks(range(7))
-        self.ax_negative.set_xticks(range(7))
-
         self.ax_positive.set_ylabel('Emotion Level')
         self.ax_neutral.set_ylabel('Emotion Level')
         self.ax_negative.set_ylabel('Emotion Level')
@@ -52,7 +48,7 @@ class PositiveEmotionWindow(QWidget):
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_plot)
-        self.timer.start(1000)
+        self.timer.start(100)
 
         self.emotion_counts = emotion_counts
 
@@ -151,7 +147,7 @@ class EmotionDetectorApp(QWidget):
 
         self.text_edit = QTextEdit()
         self.text_edit.setText(self.training_info)
-
+        self.text_edit.setReadOnly(True)
         grid_layout.addWidget(self.text_edit, 0, 12, 0, 10)
 
         layout.addLayout(grid_layout)
