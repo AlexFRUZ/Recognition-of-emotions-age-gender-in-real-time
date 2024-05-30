@@ -104,6 +104,7 @@ class EmotionDetectorApp(QWidget):
         self.initUI()
 
     def initUI(self):
+        self.setWindowTitle("Recognition app")
         self.json_file = open("emotiondetector.json", "r")
         self.model_json = self.json_file.read()
         self.json_file.close()
@@ -119,7 +120,7 @@ class EmotionDetectorApp(QWidget):
         self.btn_stat = QPushButton('Show Emotion Statistics', self)
         self.btn_stat.clicked.connect(self.show_statistics)
 
-        self.btn_positive = QPushButton('Show Positive Emotions', self)
+        self.btn_positive = QPushButton('Show Emotions', self)
         self.btn_positive.clicked.connect(self.show_positive_emotions)
 
         self.statistics_label = QLabel(self)
