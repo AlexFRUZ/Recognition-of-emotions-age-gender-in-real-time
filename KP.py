@@ -1,75 +1,58 @@
+from keras.utils import to_categorical
+from keras.layers import Dropout, Dense, Conv2D, MaxPooling2D, Flatten
+from keras.models import Sequential
+from keras.preprocessing.image import load_img, img_to_array
 import os
+import pandas as pd
 import numpy as np
-from tensorflow.keras.models import load_model, Sequential
-from tensorflow.keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, BatchNormalization, Dropout
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.callbacks import ModelCheckpoint, LearningRateScheduler, EarlyStopping
-import cv2
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.preprocessing.image import img_to_array
+from tqdm import tqdm
+from sklearn.preprocessing import LabelEncoder
+from PIL import Image
 
-dataset_path = r'C:\Users\user1\OneDrive\Робочий стіл\Нова папка\DataSet\train'
+num_classes = 2
 
-img_size = (48, 48)
-num_classes = 7
-epochs = 1000
+TRAIN_DIR = 'dataset'
 
-datagen = ImageDataGenerator(
-    rescale=1./255,
-    rotation_range=20,
-    width_shift_range=0.2,
-    height_shift_range=0.2,
-    shear_range=0.2,
-    zoom_range=0.2,
-    horizontal_flip=True,
-    fill_mode='nearest'
-)
+def create_dataframe(directory):
+    image_path = []
+    labels = []
+    for label in os.listdir(directory):
+        label_path = os.path.join(directory, label)
+        if os.path.isdir(label_path):  # Перевірка, чи це дійсно каталог
+            for image_name in os.listdir(label_path):
+                image_path.append(os.path.join(label_path, image_name))
+                labels.append(label)
+    return image_path, labels
 
-train_generator = datagen.flow_from_directory(
-    dataset_path,
-    target_size=img_size,
-    batch_size=32,
-    class_mode='categorical'
-)
+train = pd.DataFrame()
+train['image'], train['label'] = create_dataframe(TRAIN_DIR)
 
-pretrained_model_path = r'D:\Train\emotion_model_final.h5'
-pretrained_model = load_model(pretrained_model_path)
+def extract_features(images):
+    features = []
+    for image in tqdm(images):
+        img = load_img(image, grayscale=True)
+        img = img.resize((48, 48))  # Змінено розмір до 48x48 пікселів
+        img = img_to_array(img)
+        features.append(img)
+    features = np.array(features)
+    features = features.reshape(len(features), 48, 48, 1)
+    return features
 
-pretrained_model.compile(optimizer=Adam(learning_rate=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+train_features = extract_features(train['image'])
 
-def recognize_emotion(frame):
-    resized_frame = cv2.resize(frame, (48, 48))
+x_train = train_features / 255.0
 
-    gray_frame = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2GRAY)
+le = LabelEncoder()
+y_train = le.fit_transform(train['label'])
+y_train = to_categorical(y_train, num_classes)
 
-    gray_frame = np.expand_dims(gray_frame, axis=-1)
-    gray_frame = np.repeat(gray_frame, 3, axis=-1)
+model = Sequential()
+model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', input_shape=(48, 48, 1)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.2))
+model.add(Flatten())
+model.add(Dense(num_classes, activation='softmax'))
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+model.fit(x=x_train, y=y_train, batch_size=32, epochs=10, validation_split=0.2)
 
-    gray_frame = gray_frame / 255.0  # Normalization to [0, 1]
-
-    input_data = img_to_array(gray_frame)
-    input_data = np.expand_dims(input_data, axis=0)
-
-    emotion_probabilities = pretrained_model.predict(input_data)[0]
-    emotion_label = np.argmax(emotion_probabilities)
-
-    emotion_labels = ["Angry", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral"]
-    detected_emotion = emotion_labels[emotion_label]
-
-    print("Detected Emotion:", detected_emotion)
-
-class EmotionRecognitionCallback(ModelCheckpoint):
-    def on_epoch_end(self, epoch, logs=None):
-        ret, frame = camera.read()
-        if ret:
-            recognize_emotion(frame)
-
-camera = cv2.VideoCapture(0)
-
-emotion_callback = EmotionRecognitionCallback(filepath=pretrained_model_path, monitor='loss', save_best_only=True)
-
-pretrained_model.fit(train_generator, epochs=epochs, callbacks=[emotion_callback])
-
-camera.release()
-
-pretrained_model.save(pretrained_model_path)
+model.save('gender.h5')
