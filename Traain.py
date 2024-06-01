@@ -1,5 +1,5 @@
 import cv2
-from keras.models import model_from_json
+from keras.models import model_from_json, load_model
 import numpy as np
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QMessageBox, QTextEdit, QGridLayout
 from PyQt5.QtCore import QTimer, Qt
@@ -96,7 +96,8 @@ class EmotionDetectorApp(QWidget):
         self.labels = None
         self.haar_file = None
         self.face_cascade = None
-        self.model = None
+        self.emotion_model = None
+        self.gender_model = None
         self.model_json = None
         self.json_file = None
         self.positive_window = None
@@ -108,9 +109,10 @@ class EmotionDetectorApp(QWidget):
         self.json_file = open("emotiondetector.json", "r")
         self.model_json = self.json_file.read()
         self.json_file.close()
-        self.model = model_from_json(self.model_json)
+        self.emotion_model = model_from_json(self.model_json)
 
-        self.model.load_weights("emotiondetector.h5")
+        self.emotion_model.load_weights("emotiondetector.h5")
+        self.gender_model = load_model("gender.h5")
         self.haar_file = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
         self.face_cascade = cv2.CascadeClassifier(self.haar_file)
 
@@ -173,13 +175,17 @@ class EmotionDetectorApp(QWidget):
                 cv2.rectangle(im, (p, q), (p + r, q + s), (255, 0, 0), 2)
                 image = cv2.resize(image, (48, 48))
                 img = extract_features(image)
-                pred = self.model.predict(img)
-                prediction_label = self.labels[pred.argmax()]
 
-                cv2.putText(im, '% s' % prediction_label, (p - 10, q - 10), cv2.FONT_HERSHEY_COMPLEX_SMALL, 2,
-                            (0, 0, 255))
+                pred_emotion = self.emotion_model.predict(img)
+                prediction_label_emotion = self.labels[pred_emotion.argmax()]
 
-                self.emotion_counts[prediction_label] += 1
+                pred_gender = self.gender_model.predict(img)
+                gender_label = "Female" if pred_gender[0][0] > 0.5 else "Male"
+
+                cv2.putText(im, f'{gender_label}: {prediction_label_emotion}', (p - 10, q - 10),
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255))
+
+                self.emotion_counts[prediction_label_emotion] += 1
 
             im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
             h, w, ch = im.shape
