@@ -180,7 +180,7 @@ class EmotionDetectorApp(QWidget):
                 prediction_label_emotion = self.labels[pred_emotion.argmax()]
 
                 pred_gender = self.gender_model.predict(img)
-                gender_label = "Female" if pred_gender[0][0] > 0.5 else "Male"
+                gender_label = "Male" if pred_gender[0][0] > 0.5 else "Female"
 
                 cv2.putText(im, f'{gender_label}: {prediction_label_emotion}', (p - 10, q - 10),
                             cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255))
