@@ -1,18 +1,17 @@
+import sys
 import cv2
-from keras.models import model_from_json, load_model
 import numpy as np
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QMessageBox, QTextEdit, QGridLayout
+from keras.models import model_from_json, load_model
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QTextEdit, QGridLayout
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtGui import QImage, QPixmap
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
-
 def extract_features(image):
     feature = np.array(image)
     feature = feature.reshape(1, 48, 48, 1)
     return feature / 255.0
-
 
 class PositiveEmotionWindow(QWidget):
     def __init__(self, emotion_counts):
@@ -98,6 +97,7 @@ class EmotionDetectorApp(QWidget):
         self.face_cascade = None
         self.emotion_model = None
         self.gender_model = None
+        self.age_model = None
         self.model_json = None
         self.json_file = None
         self.positive_window = None
@@ -105,19 +105,26 @@ class EmotionDetectorApp(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle("Recognition app")
+        self.setWindowTitle("Recognition App")
+
         self.json_file = open("emotiondetector.json", "r")
         self.model_json = self.json_file.read()
         self.json_file.close()
         self.emotion_model = model_from_json(self.model_json)
-
+       
         self.emotion_model.load_weights("emotiondetector.h5")
+
         self.gender_model = load_model("gender.h5")
+
+        self.age_model = load_model("age.h5")
+
         self.haar_file = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
         self.face_cascade = cv2.CascadeClassifier(self.haar_file)
 
         self.webcam = cv2.VideoCapture(0)
         self.labels = {0: 'angry', 1: 'disgust', 2: 'fear', 3: 'happy', 4: 'neutral', 5: 'sad', 6: 'surprise'}
+
+        self.age_ranges = ['15-20', '25-32', '38-43', '4-6', '48-53', '60+', '8-13']
 
         self.btn_stat = QPushButton('Show Emotion Statistics', self)
         self.btn_stat.clicked.connect(self.show_statistics)
@@ -140,6 +147,7 @@ class EmotionDetectorApp(QWidget):
             self.training_info = training_info
         except FileNotFoundError:
             self.training_info = "File not found."
+
         layout = QVBoxLayout()
         grid_layout = QGridLayout()
 
@@ -182,7 +190,11 @@ class EmotionDetectorApp(QWidget):
                 pred_gender = self.gender_model.predict(img)
                 gender_label = "Male" if pred_gender[0][0] > 0.5 else "Female"
 
-                cv2.putText(im, f'{gender_label}: {prediction_label_emotion}', (p - 10, q - 10),
+                pred_age = self.age_model.predict(img)
+                age_range_index = pred_age.argmax()
+                age_range_label = self.age_ranges[age_range_index]
+
+                cv2.putText(im, f'{gender_label}: {prediction_label_emotion} ({age_range_label})', (p - 10, q - 10),
                             cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255))
 
                 self.emotion_counts[prediction_label_emotion] += 1
@@ -208,28 +220,9 @@ class EmotionDetectorApp(QWidget):
         self.ax.set_ylabel('Count')
         self.ax.set_title('Emotion Statistics')
         self.canvas.draw()
-        dominant_emotion = max(self.emotion_counts, key=self.emotion_counts.get)
-        if dominant_emotion == 'angry':
-            message = "You seem to be angry."
-        elif dominant_emotion == 'disgust':
-            message = "You seem to be disgusted."
-        elif dominant_emotion == 'fear':
-            message = "You seem to be afraid."
-        elif dominant_emotion == 'happy':
-            message = "You seem to be happy."
-        elif dominant_emotion == 'neutral':
-            message = "You seem to be neutral."
-        elif dominant_emotion == 'sad':
-            message = "You seem to be sad."
-        elif dominant_emotion == 'surprise':
-            message = "You seem to be surprised."
-        else:
-            message = "Unable to determine your emotion."
-
-        QMessageBox.information(self, "Dominant Emotion", message)
 
 if __name__ == '__main__':
-    app = QApplication([])
+    app = QApplication(sys.argv)
     window = EmotionDetectorApp()
     window.show()
-    app.exec_()
+    sys.exit(app.exec_())
