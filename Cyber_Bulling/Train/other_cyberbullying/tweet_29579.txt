@@ -1,0 +1,1 @@
+Putting them both on the same app secret/key (just diff user creds), adding more sources for gater_ebooks, doing some filesystem cleanup.

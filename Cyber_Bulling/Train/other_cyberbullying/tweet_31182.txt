@@ -1,0 +1,1 @@
+@MacLemon @dtm609 @Osw94k you're thinking kernel, not userland. quite a bit of recent(ish) freebsd userland exists in osx.

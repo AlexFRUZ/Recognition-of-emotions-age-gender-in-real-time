@@ -1,0 +1,1 @@
+The contact form on the site was bugged. Turns out that if you use a ']' in the email subject prefix, it breaks everything. silly wordpress.

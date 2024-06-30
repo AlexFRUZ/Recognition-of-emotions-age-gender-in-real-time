@@ -1,0 +1,1 @@
+Rolling out a new safety landing page is only useful as long as you update your existing documentation to point to it, @ask_fm.

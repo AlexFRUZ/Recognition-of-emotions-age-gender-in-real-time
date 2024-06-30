@@ -1,0 +1,1 @@
+Things I hate: Installers that require a restart and then trigger the restart when I hit finish. No I do not want to restart right now tyvm

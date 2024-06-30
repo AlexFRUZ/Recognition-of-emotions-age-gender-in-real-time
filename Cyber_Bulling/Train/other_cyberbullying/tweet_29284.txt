@@ -1,0 +1,1 @@
+Will the dev that has never forgotten to put in sleep statements or increment counters or wrote a poorly designed loop please stand up?

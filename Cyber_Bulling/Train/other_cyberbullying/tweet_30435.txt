@@ -1,0 +1,1 @@
+PC-BSD is a fork that is mostly funded by iXSystems, the organization that runs FreeBSD marketing. It's a frontend on top of FreeBSD.

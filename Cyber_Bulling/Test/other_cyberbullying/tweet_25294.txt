@@ -1,0 +1,1 @@
+@sschinke @TsundereRager the latest version doesn't take this into account, iirc. i just added it to my custom bot blacklist.

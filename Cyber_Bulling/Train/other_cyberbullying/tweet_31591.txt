@@ -1,0 +1,1 @@
+So far, the primary response I've heard from the FreeBSD dev community in regards to all of this is "how can we help?"

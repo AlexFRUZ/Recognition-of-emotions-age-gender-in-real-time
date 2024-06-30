@@ -1,0 +1,1 @@
+@cheeseplus @obfuscurity wsp is... sigh. but i'm just using docker in aws with a grafana image. fuck configuring this crap.

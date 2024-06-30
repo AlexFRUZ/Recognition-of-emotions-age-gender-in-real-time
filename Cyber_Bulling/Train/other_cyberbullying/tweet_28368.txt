@@ -1,0 +1,1 @@
+It is 2015. Java's installer still prompts to install the Ask toolbar. Ugh, Oracle, do you even go here?

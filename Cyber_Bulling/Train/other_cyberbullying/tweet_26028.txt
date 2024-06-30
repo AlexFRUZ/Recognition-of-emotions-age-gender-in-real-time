@@ -1,0 +1,1 @@
+SWF looking for long walks on the beach with a lightweight NoSQL/kv store. must have good ruby libs, serverless à la SQLite would be a plus.

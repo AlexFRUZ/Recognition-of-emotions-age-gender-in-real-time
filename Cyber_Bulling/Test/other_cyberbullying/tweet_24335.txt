@@ -1,0 +1,1 @@
+@informationchef summarize(stats.counters.tweetstats.hashtag.all.count,'5m','sum')

@@ -1,0 +1,1 @@
+Oh, hell. Is Blizzard proxying tweets instead of sending the tweet content directly to twitter from the WoW client?

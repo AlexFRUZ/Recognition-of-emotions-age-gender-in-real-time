@@ -1,0 +1,1 @@
+KISS (keep it simple, stupid) very much applies to designing a new feature. If Blizzard is proxying tweets, that's unnecessary and bad.

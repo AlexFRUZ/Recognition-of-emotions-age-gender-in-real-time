@@ -11,8 +11,8 @@ import pandas as pd
 
 num_class = 7
 
-TRAIN_DIR = 'age_organized'
-TEST_DIR = 'age_organize'
+TRAIN_DIR = 'age_train'
+TEST_DIR = 'age_test'
 
 
 def create_dataframe(directory):

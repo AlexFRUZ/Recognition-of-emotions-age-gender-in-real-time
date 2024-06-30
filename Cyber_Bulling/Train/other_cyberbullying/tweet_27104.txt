@@ -1,0 +1,1 @@
+I'm starting to get a grasp for when the notification ugliness is going to happen, so it could be an interesting incident notification tool.

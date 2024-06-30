@@ -1,0 +1,1 @@
+RT @avatastic: @freebsdgirl Also, anyone who has never written if (x = 0) in their C/Java/&lt;insert language where assignment will always ret…

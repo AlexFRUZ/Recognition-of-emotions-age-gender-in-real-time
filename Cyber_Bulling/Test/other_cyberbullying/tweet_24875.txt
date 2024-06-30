@@ -1,0 +1,1 @@
+I've got debug output scrolling as I run the program from within screen. I always have this up. It is scrolling too fast for me to read.

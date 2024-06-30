@@ -1,0 +1,1 @@
+@argonblue my perl is pretty readable. not as efficient, necessarily, but definitely possible for anyone to read &amp; understand.

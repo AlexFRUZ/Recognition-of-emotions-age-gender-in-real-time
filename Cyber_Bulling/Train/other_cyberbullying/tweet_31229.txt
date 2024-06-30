@@ -1,0 +1,1 @@
+Nerd followers: I'm monitoring hashtag/mentions and sending a statsd incr call for each one.

@@ -1,0 +1,1 @@
+@cjcsuhta full blown redis is overkill for what I'm doing. Will try this out. :)

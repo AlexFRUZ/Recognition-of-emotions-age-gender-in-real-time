@@ -1,0 +1,1 @@
+Yo, windows people. Is there any free app (other than puppet) that will allow me to define apps to install on new PCs?

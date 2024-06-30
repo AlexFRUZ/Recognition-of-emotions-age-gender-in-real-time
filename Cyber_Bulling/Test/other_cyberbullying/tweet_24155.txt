@@ -1,0 +1,1 @@
+@cheeseplus yeah. i'm kind of feeling like for what i'm doing, wsp is ok. for doing more granular monitoring, redis would be good.

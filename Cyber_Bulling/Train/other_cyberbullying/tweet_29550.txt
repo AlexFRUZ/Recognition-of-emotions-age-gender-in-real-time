@@ -1,0 +1,1 @@
+@Symbo1ics BSDs have been moving away from including GPLed packages in base for a very long time. Apple tends to use &amp; reflect BSD changes.

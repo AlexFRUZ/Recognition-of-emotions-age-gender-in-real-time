@@ -1,0 +1,1 @@
+Client side changes seem like an easy fix, and from an eng perspective, they are! But multiple internal + 3rd party clients complicate.

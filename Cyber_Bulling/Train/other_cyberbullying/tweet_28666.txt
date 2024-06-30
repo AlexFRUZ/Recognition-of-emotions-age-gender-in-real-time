@@ -1,0 +1,1 @@
+I hate configuring retention policies and flush intervals in statsd/graphite. Ughhhh.

@@ -1,0 +1,1 @@
+The Developer Policy needs an update that allows us to filter non-promoted tweets. Twitter clients continue to have bugs w/large block lists

@@ -1,0 +1,1 @@
+It's super common to run into an unintentional DoS, especially in dev. Ever make a stupid mistake that caused a critical lack of resources?

@@ -1,0 +1,1 @@
+@cheeseplus @obfuscurity i got statsd/graphite working on freebsd once, but then i switched to connected line graphs and it crashed?!

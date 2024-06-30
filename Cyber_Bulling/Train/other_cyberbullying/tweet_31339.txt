@@ -1,0 +1,1 @@
+@informationchef i have no idea what these mean: requestContext, seriesList. guessing intervalstring would be 5m?

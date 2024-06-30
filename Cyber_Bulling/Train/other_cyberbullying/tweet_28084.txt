@@ -1,0 +1,1 @@
+I don't understand why a simple technical definition is giving them so much of a problem. They seem to think DoS/DDoS == excessive packets.

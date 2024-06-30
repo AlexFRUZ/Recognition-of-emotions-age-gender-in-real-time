@@ -1,0 +1,1 @@
+I've got redirects set up, so existing articles/posts that linked to the old URLs should work just fine.

@@ -1,0 +1,1 @@
+@BrianHallDev redis is overkill for what i'm doing. i want something more portable/daemonless.

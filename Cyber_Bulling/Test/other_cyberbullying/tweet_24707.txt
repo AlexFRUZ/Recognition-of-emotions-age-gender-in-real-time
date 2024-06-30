@@ -1,0 +1,1 @@
+It's come to my attention that ggautoblocker whitelist stuff isn't going through properly. Taking a look at that tonight.

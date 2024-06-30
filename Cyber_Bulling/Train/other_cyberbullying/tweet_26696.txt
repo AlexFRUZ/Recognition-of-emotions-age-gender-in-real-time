@@ -1,0 +1,1 @@
+@korvys i'm having to transition away from redis due to db size, and that's making everything more difficult.

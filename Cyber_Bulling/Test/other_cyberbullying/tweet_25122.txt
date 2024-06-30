@@ -1,0 +1,1 @@
+DoS/DDoS doesn't refer to a technique or method of transport.

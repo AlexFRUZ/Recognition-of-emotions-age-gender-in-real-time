@@ -1,0 +1,1 @@
+@Monte_Lin twitter's UI bugs out all the time. it wasn't a surprising bug. I'd be willing to bet it's not replicatable.

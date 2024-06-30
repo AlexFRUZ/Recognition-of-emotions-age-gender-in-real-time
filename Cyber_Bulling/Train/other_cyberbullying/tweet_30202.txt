@@ -1,0 +1,1 @@
+@Cleon my code could have been compressed to half the size :P I go for readability.

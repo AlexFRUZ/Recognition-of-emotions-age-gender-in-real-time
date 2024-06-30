@@ -1,0 +1,1 @@
+@coconono there's no hard definition of what constitutes DoS beyond lack of service. Service is open to mean many things.

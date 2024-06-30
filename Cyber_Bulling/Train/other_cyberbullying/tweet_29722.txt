@@ -1,0 +1,1 @@
+Trying to play nicely with others on the same areas of code is a learning experience. DevOps did not prepare me for this.
