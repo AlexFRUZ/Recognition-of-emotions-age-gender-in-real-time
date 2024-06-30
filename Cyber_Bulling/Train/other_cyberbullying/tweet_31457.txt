@@ -1,1 +1,0 @@
-I can get a list of userids that have RTed a tweet with GET statuses/retweeters/ids - but what about favorites?

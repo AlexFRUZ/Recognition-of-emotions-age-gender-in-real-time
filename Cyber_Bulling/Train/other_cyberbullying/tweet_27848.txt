@@ -1,1 +1,0 @@
-In P5, worst case scenario is you get a bad item and they leave.

@@ -1,1 +1,0 @@
-What's the difference between drunk perl and sober perl?

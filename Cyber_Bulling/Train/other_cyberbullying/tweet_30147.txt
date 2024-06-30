@@ -1,1 +1,0 @@
-But when I discovered what ruby was like on the inside after long chats about threading, it all went downhill. http://t.co/dCuNngbXqz

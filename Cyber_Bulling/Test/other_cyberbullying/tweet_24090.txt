@@ -1,1 +1,0 @@
-if you want, you can classify an influx of notifications (dogpile!) as unintentional DDoS, as it makes core functionality unusable to you.

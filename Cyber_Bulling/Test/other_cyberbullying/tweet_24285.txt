@@ -1,1 +1,0 @@
-@markemer I love perl, but I think I'm starting to shift towards ruby. gem is nice. docs are horrid. need to read more about classes.

@@ -1,1 +1,0 @@
-@eDRoaCH @twitter think about how passwords work. are they stored in plaintext? can the provider easily decrypt them? nope.

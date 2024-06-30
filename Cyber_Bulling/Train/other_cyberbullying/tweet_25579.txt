@@ -1,1 +1,0 @@
-Not to mention, initial development time increase incrementally when trying to learn a new language at the same time as writing a new tool.

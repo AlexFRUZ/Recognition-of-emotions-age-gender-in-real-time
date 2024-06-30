@@ -1,1 +1,0 @@
-@cigardubey chrome now supports having user profiles as well. i switch back and forth for a few different things. it's useful.

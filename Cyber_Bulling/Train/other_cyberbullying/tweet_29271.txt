@@ -1,1 +1,0 @@
-@vex0rian @Sir5000 @StormsOnSaturn or it's not responding to kill signals. weeeeird. because i ran the script manually and it worked.

@@ -1,1 +1,0 @@
-@snarkyRedhd anyone *can* block IP addresses. it seems a fairly unwise thing to do, given NAT and dynamic IPs.

@@ -1,1 +1,0 @@
-@GregTheTerrible block while waiting indefinitely on data from a filehandle.

@@ -1,1 +1,0 @@
-@GravityPike grafana is weird. i've never used it before. it does not act like it would expect.

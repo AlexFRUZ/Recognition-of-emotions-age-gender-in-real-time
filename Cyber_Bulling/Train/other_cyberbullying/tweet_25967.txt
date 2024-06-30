@@ -1,1 +1,0 @@
-@gavinatkinson i am not the current sysinstall maintainer. my sysinstall isn't even in use anymore. :P

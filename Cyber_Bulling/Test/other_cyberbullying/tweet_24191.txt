@@ -1,1 +1,0 @@
-@MadcapOcelot I think @ameliagreenhall did that in her first blog post about him. Doing it programmatically is *really* hard.

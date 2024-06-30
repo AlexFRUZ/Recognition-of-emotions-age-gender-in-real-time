@@ -1,1 +1,0 @@
-@markemer ruby seems like it would have a lot of stuff that you don't *have* to learn. so i can write code in it, but far to go.

@@ -1,1 +1,0 @@
-@korvys i could abstract some of the data, but i'm using it mostly to track effectiveness of tools.

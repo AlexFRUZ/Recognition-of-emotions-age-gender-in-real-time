@@ -1,1 +1,0 @@
-@AnthonyBriggs speaking of which, i was able to oom my t2.micro servers with that script. :P hehe.

@@ -1,1 +1,0 @@
-@1Life0Continues part of the reason i'm not actively using it that much is because the weights of each factor are still being decided.

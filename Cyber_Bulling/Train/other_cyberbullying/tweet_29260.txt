@@ -1,1 +1,0 @@
-RT @j4cob: @freebsdgirl My favorite command for spot checking lists: shuf -n 5 file.txt

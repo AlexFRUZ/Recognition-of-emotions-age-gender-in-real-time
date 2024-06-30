@@ -1,1 +1,0 @@
-@alb_tross I don't use FreeBSD as a desktop.

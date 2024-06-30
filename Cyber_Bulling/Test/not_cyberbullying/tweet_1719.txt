@@ -1,1 +1,0 @@
-@tiny_m @sep332 @holman ruby's implementation of threading definitely does not get me hot.

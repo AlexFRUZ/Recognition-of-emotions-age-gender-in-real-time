@@ -1,1 +1,0 @@
-@m1sp hey, do you have a good way to consume multiple json dumps into a single corpus? i've been just hacking it together.

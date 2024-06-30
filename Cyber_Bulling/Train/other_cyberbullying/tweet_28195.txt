@@ -1,1 +1,0 @@
-@Symbo1ics apple mostly uses bsd licensed code.

@@ -1,1 +1,0 @@
-We will be releasing as many tools as possible under the BSD license. @korvys

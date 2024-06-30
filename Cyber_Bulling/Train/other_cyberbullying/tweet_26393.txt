@@ -1,1 +1,0 @@
-@mwlauthor i've mentioned before about how i bleed twitter json. i could probably construct an API call's return value by hand at this point

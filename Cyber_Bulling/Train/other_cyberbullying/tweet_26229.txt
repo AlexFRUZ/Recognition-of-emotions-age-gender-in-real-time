@@ -1,1 +1,0 @@
-@Spacekatgal i'm FOSS at heart. i think the tools should be open for all to use. however, for monitoring services, things that require infra

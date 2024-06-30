@@ -1,1 +1,0 @@
-@sschinke i switched from bsd 2-clause to 3-clause for oapi stuff, and that's about as restrictive as i want to get.
